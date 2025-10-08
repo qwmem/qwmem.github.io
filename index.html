@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高级黑·资源下载中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        // Tailwind配置：定制高级黑主题与圆角体系
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            950: '#050505', // 极致黑背景
+                            900: '#0D0D0D', // 主容器黑
+                            850: '#141414', // 卡片黑
+                            800: '#1A1A1A', // 次级容器黑
+                            700: '#262626'  // 边框/分割线黑
+                        },
+                        accent: '#4F46E5', // 高级紫蓝色强调（低饱和更显质感）
+                        accentLight: '#818CF8' // 强调色高光
+                    },
+                    borderRadius: {
+                        '2xl': '12px',
+                        '3xl': '16px',
+                        '4xl': '20px',
+                        'full': '9999px'
+                    },
+                    boxShadow: {
+                        'card': '0 8px 30px rgba(0, 0, 0, 0.3)',
+                        'btn': '0 4px 20px rgba(79, 70, 229, 0.25)',
+                        'hover': '0 12px 40px rgba(79, 70, 229, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            // 自定义工具类：高级视觉效果
+            .bg-gradient-radial {
+                background-image: radial-gradient(circle at 25% 15%, rgba(79, 70, 229, 0.05) 0%, transparent 45%),
+                                  radial-gradient(circle at 75% 85%, rgba(79, 70, 229, 0.03) 0%, transparent 45%);
+            }
+            .text-glow {
+                text-shadow: 0 0 12px rgba(129, 140, 248, 0.3);
+            }
+            .transition-all-300 {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .transition-all-500 {
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+        }
+
+        // 基础全局样式
+        body {
+            background-color: #050505;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="bg-dark-950 bg-gradient-radial text-gray-200 min-h-screen flex flex-col">
+    <!-- 顶部导航栏：悬浮玻璃质感 -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-dark-900/70 border-b border-dark-700/50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- 品牌Logo -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-accent to-accentLight flex items-center justify-center">
+                    <<i class="fa fa-cloud-download text-white text-xl"></</i>
+                </div>
+                <h1 class="text-xl sm:text-2xl font-bold text-white text-glow">DownloadHub</h1>
+            </div>
+
+            <!-- 导航链接：桌面端 -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#" class="text-white font-medium hover:text-accentLight transition-all-300">首页</a>
+                <a href="#" class="text-gray-400 hover:text-accentLight transition-all-300">资源分类</a>
+                <a href="#" class="text-gray-400 hover:text-accentLight transition-all-300">会员中心</a>
+                <a href="#" class="text-gray-400 hover:text-accentLight transition-all-300">帮助指南</a>
+            </nav>
+
+            <!-- 登录按钮 -->
+            <button class="hidden sm:flex items-center gap-2 px-5 py-2 rounded-2xl bg-dark-800 border border-dark-700 hover:border-accent/30 transition-all-300">
+                <<i class="fa fa-user-circle-o text-accent"></</i>
+                <span>登录</span>
+            </button>
+
+            <!-- 移动端菜单按钮 -->
+            <button class="md:hidden w-10 h-10 rounded-2xl bg-dark-800 flex items-center justify-center">
+                <<i class="fa fa-bars text-gray-300"></</i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+        <!-- 页面标题区：居中排版+呼吸感间距 -->
+        <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
+            <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-white mb-4 leading-tight">
+                高效获取<span class="text-accent text-glow">优质资源</span>
+            </h2>
+            <p class="text-gray-400 text-base sm:text-lg leading-relaxed">
+                精选设计素材、开发工具、文档模板等资源，每一份资源均经过安全检测，支持高速下载，满足你的创作与工作需求
+            </p>
+        </div>
+
+        <!-- 资源筛选栏：简洁横向布局 -->
+        <div class="bg-dark-900 rounded-3xl p-4 sm:p-6 mb-10 border border-dark-700/50 shadow-card">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <!-- 搜索框 -->
+                <div class="relative flex-1 max-w-md">
+                    <input type="text" placeholder="搜索资源名称..." 
+                        class="w-full bg-dark-800 border border-dark-700 rounded-2xl py-3 pl-12 pr-4 focus:outline-none focus:border-accent/50 transition-all-300 text-gray-300">
+                    <<i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></</i>
+                </div>
+
+                <!-- 筛选下拉 -->
+                <div class="flex items-center gap-3 flex-wrap">
+                    <select class="bg-dark-800 border border-dark-700 rounded-2xl py-3 px-4 pr-10 focus:outline-none focus:border-accent/50 transition-all-300 text-gray-300">
+                        <option>全部分类</option>
+                        <option>设计素材</option>
+                        <option>开发工具</option>
+                        <option>文档模板</option>
+                    </select>
+                    <select class="bg-dark-800 border border-dark-700 rounded-2xl py-3 px-4 pr-10 focus:outline-none focus:border-accent/50 transition-all-300 text-gray-300">
+                        <option>最新上传</option>
+                        <option>下载最多</option>
+                        <option>评分最高</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 资源卡片网格：响应式布局+hover动效 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
+            <!-- 资源卡片1：设计素材 -->
+            <div class="bg-dark-850 rounded-3xl overflow-hidden border border-dark-700/50 shadow-card hover:shadow-hover hover:border-accent/20 transition-all-500 group">
+                <!-- 卡片封面图 -->
+                <div class="relative h-48 overflow-hidden rounded-t-3xl">
+                    <img src="https://picsum.photos/id/1/600/400" alt="设计素材包" class="w-full h-full object-cover transition-transform-500 group-hover:scale-105">
+                    <div class="absolute top-4 right-4 bg-dark-900/80 backdrop-blur-sm rounded-xl px-3 py-1 text-xs text-gray-300">
+                        设计素材
+                    </div>
+                </div>
+                <!-- 卡片内容 -->
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-accentLight transition-all-300">UI设计组件库</h3>
+                    <p class="text-gray-400 text-sm mb-4 line-clamp-2">包含1000+ UI组件，支持Figma、Sketch格式，可直接复用</p>
+                    <!-- 资源信息 -->
+                    <div class="flex items-center text-xs text-gray-500 mb-5 gap-4">
+                        <span class="flex items-center"><<i class="fa fa-file-o mr-1"></</i> 2.8 GB</span>
+                        <span class="flex items-center"><<i class="fa fa-download mr-1"></</i> 12.5k</span>
+                        <span class="flex items-center"><<i class="fa fa-star mr-1 text-yellow-500"></</i> 4.9</span>
+                    </div>
+                    <!-- 下载按钮 -->
+                    <button class="w-full py-3 rounded-2xl bg-accent/10 text-accent font-medium hover:bg-accent hover:text-white transition-all-300 shadow-btn flex items-center justify-center gap-2">
+                        <<i class="fa fa-download"></</i>
+                        <span>立即下载</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 资源卡片2：开发工具 -->
+            <div class="bg-dark-850 rounded-3xl overflow-hidden border border-dark-700/50 shadow-card hover:shadow-hover hover:border-accent/20 transition-all-500 group">
+                <div class="relative h-48 overflow-hidden rounded-t-3xl">
+                    <img src="https://picsum.photos/id/0/600/400" alt="开发工具包" class="w-full h-full object-cover transition-transform-500 group-hover:scale-105">
+                    <div class="absolute top-4 right-4 bg-dark-900/80 backdrop-blur-sm rounded-xl px-3 py-1 text-xs text-gray-300">
+                        开发工具
+                    </div>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-accentLight transition-all-300">前端开发工具箱</h3>
+                    <p class="text-gray-400 text-sm mb-4 line-clamp-2">包含代码格式化、兼容性检测、性能分析等15款实用工具</p>
+                    <div class="flex items-center text-xs text-gray-500 mb-5 gap-4">
+                        <span class="flex items-center"><<i class="fa fa-file-o mr-1"></</i> 850 MB</span>
+                        <span class="flex items-center"><<i class="fa fa-download mr-1"></</i> 8.2k</span>
+                        <span class="flex items-center"><<i class="fa fa-star mr-1 text-yellow-500"></</i> 4.7</span>
+                    </div>
+                    <button class="w-full py-3 rounded-2xl bg-accent/10 text-accent font-medium hover:bg-accent hover:text-white transition-all-300 shadow-btn flex items-center justify-center gap-2">
+                        <<i class="fa fa-download"></</i>
+                        <span>立即下载</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 资源卡片3：文档模板 -->
+            <div class="bg-dark-850 rounded-3xl overflow-hidden border border-dark-700/50 shadow-card hover:shadow-hover hover:border-accent/20 transition-all-500 group">
+                <div class="relative h-48 overflow-hidden rounded-t-3xl">
+                    <img src="https://picsum.photos/id/20/600/400" alt="文档模板" class="w-full h-full object-cover transition-transform-500 group-hover:scale-105">
+                    <div class="absolute top-4 right-4 bg-dark-900/80 backdrop-blur-sm rounded-xl px-3 py-1 text-xs text-gray-300">
+                        文档模板
+                    </div>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-accentLight transition-all-300">商务PPT模板集</h3>
+                    <p class="text-gray-400 text-sm mb-4 line-clamp-2">50+ 专业商务PPT模板，含数据分析、产品介绍、方案汇报等场景</p>
+                    <div class="flex items-center text-xs text-gray-500 mb-5 gap-4">
+                        <span class="flex items-center"><<i class="fa fa-file-o mr-1"></</i> 1.2 GB</span>
+                        <span class="flex items-center"><<i class="fa fa-download mr-1"></</i> 15.7k</span>
+                        <span class="flex items-center"><<i class="fa fa-star mr-1 text-yellow-500"></</i> 4.8</span>
+                    </div>
+                    <button class="w-full py-3 rounded-2xl bg-accent/10 text-accent font-medium hover:bg-accent hover:text-white transition-all-300 shadow-btn flex items-center justify-center gap-2">
+                        <<i class="fa fa-download"></</i>
+                        <span>立即下载</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 资源卡片4：视频素材 -->
+            <div class="bg-dark-850 rounded-3xl overflow-hidden border border-dark-700/50 shadow-card hover:shadow-hover hover:border-accent/20 transition-all-500 group">
+                <div class="relative h-48 overflow-hidden rounded-t-3xl">
+                    <img src="https://picsum.photos/id/119/600/400" alt="视频素材" class="w-full h-full object-cover transition-transform-500 group-hover:scale-105">
+                    <div class="absolute top-4 right-4 bg-dark-900/80 backdrop-blur-sm rounded-xl px-3 py-1 text-xs text-gray-300">
+                        视频素材
+                    </div>
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all-300">
+                        <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                            <<i class="fa fa-play text-white text-xl"></</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-accentLight transition-all-300">4K风景视频素材</h3>
+                    <p class="text-gray-400 text-sm mb-4 line-clamp-2">30+ 4K高清风景视频，无水印，适用于片头、宣传片制作</p>
+                    <div class="flex items-center text-xs text-gray-500 mb-5 gap-4">
+                        <span class="flex items-center"><<i class="fa fa-file-o mr-1"></</i> 15.6 GB</span>
+                        <span class="flex items-center"><<i class="fa fa-download mr-1"></</i> 6.3k</span>
+                        <span class="flex items-center"><<i class="fa fa-star mr-1 text-yellow-500"></</i> 4.9</span>
+                    </div>
+                    <button class="w-full py-3 rounded-2xl bg-accent/10 text-accent font
+                    
