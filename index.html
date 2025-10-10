@@ -3,125 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qwmem 网站</title>
+    <title>qwmem的网站2.0</title>
     <style>
+        /* 全局基础样式 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            background-color: #000;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-        .apple-17 {
-            width: 90%;
-            max-width: 420px;
-            height: 85vh;
-            max-height: 880px;
-            background-image: url("https://i.imgur.com/your-image-url.jpg"); /* /storage/emulated/0/Pictures/QQ/lunar.jpg */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-radius: 60px;
+            padding: 40px 20px;
+            background-color: #121218; /* 深色背景突出雪花 */
+            overflow: hidden; /* 隐藏超出视窗的雪花 */
+            font-family: "Microsoft YaHei", Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            box-shadow: 0 0 40px rgba(255,255,255,0.15);
-            position: relative;
-            overflow: hidden;
+            gap: 30px;
         }
-        .apple-17::before {
-            content: "";
-            position: absolute;
+
+        /* 雪花背景样式 */
+        #snow-container {
+            position: fixed;
             top: 0;
-            width: 60%;
-            height: 30px;
-            background-color: rgba(0,0,0,0.5);
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            z-index: 1;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1; /* 雪花在最底层 */
         }
-        .transparent-block {
-            background-color: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
-            z-index: 2;
-            text-decoration: none; /* 清除链接下划线 */
-            color: #000; /* 链接文字颜色 */
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: snowfall linear infinite;
         }
-        .transparent-block:hover {
-            background-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-        }
-        .main-block {
-            width: 100%;
-            padding: 3rem 1rem;
-            margin-bottom: 2.5rem;
+
+        /* 顶部大方块样式 */
+        .top-big-box {
+            width: 80%;
+            max-width: 800px;
+            padding: 40px 20px;
+            background-color: rgba(255, 255, 255, 0.2); /* 透明白色 */
+            backdrop-filter: blur(8px); /* 毛玻璃效果增强透明感 */
+            border-radius: 16px;
             text-align: center;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 10;
         }
-        .main-block h1 {
-            color: #000;
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+
+        .top-big-box h1 {
+            color: white;
+            font-size: 42px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
         }
-        .main-block p {
-            color: #000;
-            font-size: 1.1rem;
-            font-weight: 400;
+
+        .top-big-box .favorite-person {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            font-style: italic;
         }
-        .small-blocks {
-            width: 100%;
+
+        /* 下方小方块容器（一行两个，共两行） */
+        .small-boxes-container {
+            width: 80%;
+            max-width: 800px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            position: relative;
+            z-index: 10;
         }
-        .small-block {
-            height: 120px;
-            font-size: 1rem;
-            font-weight: 500;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+        /* 小方块通用样式 */
+        .small-box {
+            padding: 30px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
             text-align: center;
-            padding: 0 1rem;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .small-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
+        }
+
+        .small-box a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .small-box h3 {
+            color: white;
+            font-size: 20px;
+            line-height: 1.5;
+        }
+
+        /* 雪花飘落动画 */
+        @keyframes snowfall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 响应式适配（手机端一行一个小方块） */
+        @media (max-width: 600px) {
+            .small-boxes-container {
+                grid-template-columns: 1fr;
+            }
+
+            .top-big-box h1 {
+                font-size: 32px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="apple-17">
-        <div class="transparent-block main-block">
-            <div>
-                <h1>qwmem的网站</h1>
-                <p>我喜欢的人:xinyun_114514</p>
-            </div>
-        </div>
-        <div class="small-blocks">
-            <a href="https://www.cm-pack.pl/zh/download" class="transparent-block small-block" target="_blank">
-                神秘客户端获取😍😍😍
+    <!-- 雪花背景容器（JS动态生成） -->
+    <div id="snow-container"></div>
+
+    <!-- 顶部大方块 -->
+    <div class="top-big-box">
+        <h1>qwmem的网站2.0</h1>
+        <p class="favorite-person">我喜欢的人:xinyun_114514</p>
+    </div>
+
+    <!-- 下方四格小方块 -->
+    <div class="small-boxes-container">
+        <!-- 小方块1：神秘客户端获取（点击跳转） -->
+        <div class="small-box">
+            <a href="https://www.cm-pack.pl/zh/download" target="_blank">
+                <h3>神秘客户端获取😡😡😡</h3>
             </a>
-            <div class="transparent-block small-block">
-                <!-- 我爱玩怕不急
-            </div>
-            <div class="transparent-block small-block">
-                <!-- 我给pvp大蛇dewier10potted了 -->
-            </div>
-            <div class="transparent-block small-block">
-                <!-- 无 -->
-            </div>
+        </div>
+
+        <!-- 小方块2：使用教程 -->
+        <div class="small-box">
+            <h3>神秘客户端使用教程</h3>
+            <p style="color: rgba(255,255,255,0.7); margin-top: 10px; line-height: 1.6;">
+                1. 直接下载Windows客户端，双击即可启动<br>
+                2. 下载Android客户端，找到版本文件夹，拖拽至MC目录的“versions”文件夹
+            </p>
+        </div>
+
+        <!-- 小方块3：空 -->
+        <div class="small-box">
+            <h3>&nbsp;</h3> <!-- 空内容占位 -->
+        </div>
+
+        <!-- 小方块4：空 -->
+        <div class="small-box">
+            <h3>&nbsp;</h3> <!-- 空内容占位 -->
         </div>
     </div>
+
+    <script>
+        // 动态生成雪花（自然随机效果）
+        function createSnowflakes() {
+            const container = document.getElementById('snow-container');
+            const snowCount = 150; // 雪花数量，控制密度
+
+            for (let i = 0; i < snowCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+
+                // 随机雪花大小（2-10px）
+                const size = Math.random() * 8 + 2;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+
+                // 随机左右位置
+                snowflake.style.left = `${Math.random() * 100}vw`;
+
+                // 随机飘落速度（5-20秒，小雪花更慢）
+                const duration = size < 5 ? Math.random() * 15 + 5 : Math.random() * 10 + 8;
+                snowflake.style.animationDuration = `${duration}s`;
+
+                // 随机延迟，避免同步
+                snowflake.style.animationDelay = `${Math.random() * 10}s`;
+
+                container.appendChild(snowflake);
+            }
+        }
+
+        // 页面加载完成后生成雪花
+        window.onload = createSnowflakes;
+    </script>
 </body>
 </html>
